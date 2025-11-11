@@ -2,6 +2,8 @@
 
 A minimal x86 operating system that displays CPU information using the CPUID instruction.
 
+![THBOS Boot Demo](screenshots/cover.gif)
+
 ## Features
 
 - Boots via GRUB using Multiboot specification
