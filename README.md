@@ -100,7 +100,7 @@ sudo dd if=THBOS.iso of=/dev/sdX bs=4M status=progress
 
 ## Code Structure
 
-```
+```bash
 .
 ├── boot.s          # Assembly bootloader
 ├── kernel.c        # Main kernel code
@@ -112,7 +112,7 @@ sudo dd if=THBOS.iso of=/dev/sdX bs=4M status=progress
 
 ## Memory Layout
 
-```
+```bash
 0x00000000 - 0x000FFFFF: Real mode area (1MB)
 0x00100000:              Kernel load address
 0xB8000:                 VGA text buffer
@@ -178,9 +178,6 @@ qemu-system-x86_64 -cdrom THBOS.iso -monitor stdio
 7. Extended CPUID leaves (cache info, thermal, etc.)
 8. PCI device enumeration
 
-## License
-
-This is educational code. Use freely for learning purposes.
 
 ## References
 
