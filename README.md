@@ -23,6 +23,7 @@ A minimal x86 operating system that displays CPU information using the CPUID ins
 - **Memory**: 1MB kernel load address, 16KB stack
 
 ### Key Improvements Over Original
+- Here's the previous repo [cpuinfo-os](https://github.com/thehackersbrain/cpuinfo-os)
 1. Fixed VGA buffer size (2000 vs 2200)
 2. Proper screen scrolling instead of clearing
 3. Corrected bit masking in CPUID parsing
