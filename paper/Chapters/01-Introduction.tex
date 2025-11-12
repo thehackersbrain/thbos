@@ -15,6 +15,15 @@
   Welcome to the \textcolor{maincolor}{\textit{Thesis Template}} template! Thank you for choosing it for your dissertation, report, or project. This template reflects many hours of development, and I hope you enjoy using it as much as I did creating it. This chapter introduces its purpose and helps you get started. See \autoref{cp:user-guide} for a detailed guide, and \autoref{cp:latex-tutorial} for a brief \LaTeX~tutorial to maximise its use.
 }
 
+\section{Motivation}
+Modern operating systems abstract hardware complexity through layers of device drivers, system calls, and memory management frameworks. While this abstraction enables application portability and developer productivity, it obsecures the fundamental hardware-software interface that defines computing. Understanding this interface -- how instructions execute, how memory is addressed, how peripherals communicate with the CPU--remains essential for systems programmers, security researchers, and anyone seeking to master computer architecture at its lowest level.
+
+Building an operating system from scratch forces direct engagement with these fundamentals. There are no libraries to mask segmentation faults, no kernel panic handlers to catch undefined behavior, and no scheduler to hide the cost of context switches. Every function call maps to assembly instructions, every pointer dereference translates to physical memory access, and every hardware interaction requires manual register manipulation.
+
+\textbf{THBOS} (\textit{TheHackersBrain Operating System}) was conceived as a minimal x86 kernel that prioritizes transparency over functionality. Rather than implementing a full-featured environment, THBOS focuses on direct CPU interaction through the CPUID instruction, providing real-time hardware introspection while maintaining a codebase small enough to audit in a single sitting. The entire kernel—boot loader, VGA driver, and CPUID wrapper—comprises fewer than 500 lines of combined C and Assembly.
+
+This is a complete expermentation project while learning and keeping things practical for everyone.
+
 \section{Another Important Note}
 Okay, My emacs setup is finally working and is awesome.
 
