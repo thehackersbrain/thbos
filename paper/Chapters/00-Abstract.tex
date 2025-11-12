@@ -1,0 +1,13 @@
+\thispagestyle{plain}
+\pdfbookmark[1]{Abstract}{abstract}
+\chapter*{Abstract}
+
+TheHackersBrain OS (THBOS) is a minimal x86 \textit{operating system} kernel built from scratch in C and x86 Assembly, designed to provide direct, unmediated access to CPU-level instructions and hardware state inspection. Unlike traditional minimal OS projects that prioritize shell functionality or device driver frameworks, THBOS focuses on CPU introspection through the CPUID instruction, VGA text buffer manipulation at \texttt{0xB8000}, and transparent boot-to-kernel transitions via GRUB's Multiboot specification.
+
+But at the core, it's just some dude sharing the knowledge back to the community, from where he learned all that. The kernel operates in protected mode with a 16KB stack allocation, directly mapping \texttt{C} functions to hardware memory operations without abstraction layers. This paper deconstructs THBOS's boot sequence, memory layout via custom linker scripts, and CPUID-based vendor/model extraction, while documenting critical design decisions including GCC optimization-induced Multiboot header displacement and stack alignment constraints.
+
+Why you ask?, it's almost a base for low-level development in software engineering, binary exploitation in hacking, and just a curiosity to learn and design and understand the thing we can't live without (though as a dev or hacker or any tech person, although now even a normal person). I present a structured roadmap for extending minimal kernels with Interrupt Descriptor Tables (IDT), Programmable Interrupt Controllers (PIC), and keyboard input handlers. THBOS serves as both an educational platform for understanding x86 architecture fundamentals and a foundation for low-level system experimentation, security research, and exploit development environments.
+
+\keywordsen{Operating System, Kernel, BootLoader, CPU, C, Assembly, OS Hacking, etc.}
+
+\MediaOptionLogicBlank

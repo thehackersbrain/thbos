@@ -1,0 +1,22 @@
+%%% Code Highlighting %%%
+\newenvironment{code}{\captionsetup{type=listing}}{}
+\SetupFloatingEnvironment{listing}{name=Listing,within=none}
+\captionsetup[listing]{position=above,skip=-6pt}
+\newenvironment{longlisting}{\bigskip\medskip\captionsetup{type=listing}}{}
+
+% Define a new and improved minted style.
+\setminted{
+  frame=lines,
+  framesep=2mm,
+  baselinestretch=1.2,
+  fontsize=\footnotesize,
+  linenos,
+  tabsize=4,
+  breaklines=true,
+  breakanywhere=true
+}
+
+% Change line number color to gray.
+\renewcommand{\theFancyVerbLine}{%
+  \scriptsize\textcolor[rgb]{0.7,0.7,0.7}{\arabic{FancyVerbLine}}%
+}

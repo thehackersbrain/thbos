@@ -1,0 +1,64 @@
+\newcommand\BackgroundPicCover{%
+\put(0,0){%
+\parbox[b][\paperheight]{\paperwidth}{%
+\vfill
+\centering
+\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{Figures/Theme/Cover-BG.pdf}
+\vfill
+}}}
+
+\AddToShipoutPictureBG*{\BackgroundPicCover}
+
+\newgeometry{margin=1.98cm, top=2.15cm, bottom=1.47cm}
+\begin{titlepage}
+    \latofont
+    \color{white}
+    \vspace*{\baselineskip}
+    \vspace{12\baselineskip}
+
+    % Title.
+	\noindent
+    \makebox[\textwidth][l]{%
+        \parbox{\dimexpr\textwidth-4cm\relax}{
+            \setstretch{1.03}
+            \raggedright{\poppins\bfseries\fontsize{20}{26}\selectfont\GetTitle}
+        }
+    }
+
+    \vspace{0.8\baselineskip}
+
+    % Subtitle.
+    \noindent
+    \makebox[\textwidth][l]{%
+        \parbox{\dimexpr\textwidth-7cm\relax}{
+            \setstretch{1.03}
+            \raggedright\fontsize{14}{19}\selectfont\GetSubtitle
+        }
+    }
+	\vfill
+
+
+    % Author.
+    {\noindent\bfseries\fontsize{14}{19}\selectfont\GetAuthor}
+
+    {\noindent\itshape\fontsize{10}{10}\selectfont Email:  \GetAuthorEmail}
+
+    {\noindent\itshape\fontsize{10}{10}\selectfont Website:  \GetAuthorWebsite}
+
+    {\noindent\fontsize{10}{12}\selectfont\GetDegree}
+
+    \ifthenelse{\equal{\DocStageOption}{working}}{
+        \vspace{62pt}
+        {\noindent\fontsize{10}{12}\selectfont\overwritecolor{yellow}{\GetDocumentVersion \\ \textit{\today}}} 
+        \vspace{62pt}
+    }{
+        \vspace{125pt}
+    }
+
+    % Local & Date.
+	{\noindent\fontsize{10}{12}\selectfont\GetDate}
+
+    \vspace{68pt}
+\end{titlepage}
+\restoregeometry
+\MediaOptionLogicBlank

@@ -1,0 +1,69 @@
+\chapter[Logrithms]{Logrithms}\label{cp:logrithms}
+
+\section{What is Logrithms?}
+
+A logarithm is the \textbf{inverse operation of exponentiation}.
+
+If you know that:
+\[
+  a^2 = c
+\]
+
+then the logarithm answers the reverse question:
+\[
+  \log_{a}(c) = b
+\]
+
+It basically asks: "\textbf{\textit{To what power must I raise $a$ to get $c$?}}"
+
+\subsection{Basic Examples}
+
+\begin{itemize}
+  \item $2^2 = 8 \;\;\Rightarrow\;\; \log_{2}(8) = 3$
+    \vspace{2pt}
+  \item $10^4 = 10000 \;\;\Rightarrow\;\; \log_{10}(10000) = 4$
+    \vspace{2pt}
+  \item $e^2 \approx 7.389 \;\;\Rightarrow\;\; \ln(7.389) = 2$
+    \vspace{2pt}
+  \item $5^0 = 1 \;\;\Rightarrow\;\; \log_{5}(1) = 0$
+    \vspace{2pt}
+  \item $7^1 = 7 \;\;\Rightarrow\;\; \log_{7}(7) = 1$
+    \vspace{2pt}
+  \item $9^{1/2} = 3 \;\;\Rightarrow\;\; \log_{9}(3) = \tfrac{1}{2}$
+    \vspace{2pt}
+  \item $27^{1/3} = 3 \;\;\Rightarrow\;\; \log_{27}(3) = \tfrac{1}{3}$
+\end{itemize}
+
+\subsection{Common Logarithm Bases}
+
+\begin{itemize}
+  \item \textbf{Base 10 (common logarithm)}: $\log_{10}(x)$. Used often in real-world scales like decibels, pH, Richter scale.
+  \item \textbf{Base $e$ (natural logarithm, $ln$)}: $log_{e}(x)$. Super important in calculus, growth/decay, probability, finance, etc.
+  \item \textbf{Base 2 (binary logarithm)}: $log_{2}(x)$. Used in computer science (bits, complexity, etc.).
+\end{itemize}
+
+\subsection{Logarithms Rules (Laws of Logs)}
+
+These come from exponent rules:
+
+\begin{enumerate}
+  \item \textbf{Product Rule}: $\log_{a}(MN) = \log_{a}(M) + \log_{a}(N)$
+    \vspace{2pt}
+  \item \textbf{Quotient Rule}: $\log_{a}(M/N) = \log_{a}(M) - \log_{a}(N)$
+    \vspace{2pt}
+  \item \textbf{Power Rule}: $\log_{a}(M^k) = k \cdot \log_{a}(M)$
+    \vspace{4pt}
+  \item \textbf{Change of Base}: $\log_{a}(b) = \dfrac{\log_{c}(b)}{\log_{c}(a)}$ (lets you convert between bases).
+\end{enumerate}
+
+\subsection{Why are Logs Useful?}
+
+\begin{itemize}
+  \item \textbf{Compressing big numbers}: Turns multiplication into addition (handy in computation).
+    \vspace{2pt}
+  \item \textbf{Scales}: Earthquakes, sounds, acidity (\ce{pH}), star brightness, all useful logarithmic scales.
+  \item \textbf{Mathematics}: Solving equations like $3^x = 81$. Instead of guessing, you use logs.
+  \item \textbf{Computer Science}: Algorithms often run in $O(\log n)$ time, meaning they're super efficient.
+\end{itemize}
+
+\noindent\textbf{Example:} A novel signature scheme is introduced, along with an implementation of the Diffie-Hellman key distribution scheme that accomplishes a public key cryptosystem \citep{Elgamal1985}. According to \citet{Elgamal1985}, a new signature scheme that accomplishes a public key cryptosystem is introduced (...) This template was created by \citeauthor{THBOS}, with the title \citetitle{THBOS}.

@@ -1,0 +1,75 @@
+% Maintainer: Gaurav Raj (@thehackersbrain) <me@thehackersbrain.xyz>
+% Author: José Areia <jose.apareia@gmail.com>
+
+%%% Document Options %%%
+\documentclass[
+  docstage=final,
+  media=paper,
+  linkcolor=blue!45!black,
+  chapterstyle=classic,
+]{main} % Refer to the Wiki for a list of available options.
+
+%%% Document Version %%%
+\DocumentVersion{1.0.0} % Required only if the 'docstage' is set to 'working'.
+
+%%% Document Metadata %%%
+\input{Metadata/Metadata}
+
+%%% Loading of Glossary and Acronyms %%%
+\makeglossaries
+\loadglsentries{Matter/05-Glossary}
+\loadglsentries[\acronymtype]{Matter/06-Acronyms}
+\loadglsentries[\symboltype]{Matter/07-Symbols}
+
+\begin{document}
+
+%%% Front Matter %%%
+\include{Matter/00-Cover}
+\include{Matter/01-Front-Page}
+
+%%% Copyright Statement %%%
+\include{Matter/02-Copyright}
+
+%%% Roman Numeration %%%
+\pagenumbering{roman}
+
+%%% Acknowledgements %%%
+\include{Matter/03-Acknowledgements}
+
+%%% Abstract %%%
+\include{Chapters/00-Abstract}
+
+%%% Table of Contents, List of Figures and List of Tables %%%
+\bookmarktocentry\tableofcontents
+\listoffigures
+\listoftables
+
+%%% Print: Glossary and Acronyms %%%
+\glossarytoc\printnormalglossary
+\acronymtoc\printacronymglossary
+\symboltoc\printsymbolglossary
+
+%%% Arabic Numeration %%%
+\pagenumbering{arabic}
+
+%%% Chapters
+\include{Chapters/01-Introduction}
+\include{Chapters/02-Logrithms}
+
+%%% Bibliography %%%
+\renewcommand{\refname}{Bibliography}
+\printbibliography[title={\refname},heading=bibintoc]
+
+%%% Appendices: Work that *YOU* Developed %%%
+\appendix
+\input{Matter/08-Appendices}
+\input{Chapters/Appendices/00-AppendixA}
+
+%%% Annexes: Work that *YOU DID NOT* Develop %%%
+\input{Matter/09-Annexes}
+\input{Chapters/Annexes/00-AnnexA}
+
+%%% Back Page %%%
+\input{Matter/10-Back-Page}
+
+\end{document}
