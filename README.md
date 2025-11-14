@@ -118,12 +118,21 @@ sudo dd if=THBOS.iso of=/dev/sdX bs=4M status=progress
 
 ```bash
 .
-├── boot.s          # Assembly bootloader
-├── kernel.c        # Main kernel code
-├── kernel.h        # Type definitions and declarations
-├── linker.ld       # Linker script
-├── grub.cfg        # GRUB configuration
-└── Makefile        # Build automation
+├── Makefile              # Build automation
+├── README.md
+└── src
+    ├── bootloader
+    │   ├── boot.s        # Assembly bootloader
+    │   └── grub.cfg      # GRUB configuration
+    ├── kernel
+    │   ├── kernel.c      # Main kernel code
+    │   └── kernel.h      # Type definitions and declarations
+    ├── linker
+    │   └── linker.ld     # Linker script
+    └── zigtest
+        └── hello.zig     # zig files (in testing)
+
+6 directories, 8 files
 ```
 
 ## Memory Layout
