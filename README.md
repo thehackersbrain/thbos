@@ -17,13 +17,16 @@ A minimal x86 operating system that displays CPU information using the CPUID ins
 ## Technical Details
 
 ### Architecture
+
 - **Target**: x86 (32-bit protected mode)
 - **Bootloader**: GRUB (Multiboot 0.6.96)
 - **Display**: VGA text mode at 0xB8000
 - **Memory**: 1MB kernel load address, 16KB stack
 
 ### Key Improvements Over Original
+
 - Here's the previous repo [cpuinfo-os](https://github.com/thehackersbrain/cpuinfo-os)
+
 1. Fixed VGA buffer size (2000 vs 2200)
 2. Proper screen scrolling instead of clearing
 3. Corrected bit masking in CPUID parsing
@@ -44,11 +47,13 @@ A minimal x86 operating system that displays CPU information using the CPUID ins
 - xorriso (dependency for grub-mkrescue)
 
 ### Ubuntu/Debian
+
 ```bash
 sudo apt install build-essential gcc-multilib grub-pc-bin xorriso qemu-system-x86 qemu-ui
 ```
 
 ### Arch Linux
+
 ```bash
 sudo pacman -S base-devel grub xorriso qemu-arch-extra qemu-ui-sdl
 ```
@@ -56,6 +61,7 @@ sudo pacman -S base-devel grub xorriso qemu-arch-extra qemu-ui-sdl
 ## Building
 
 ### Using Make (recommended)
+
 ```bash
 make            # Build ISO
 make run        # Build and run in QEMU
@@ -63,40 +69,44 @@ make clean      # Clean build artifacts
 make debug      # Run with GDB debugging
 ```
 
-
 ### Manual Build
+
 ```bash
 # Assemble bootloader
-as --32 boot.s -o boot.o
+as --32 src/bootloader/boot.s -o build/boot.o
 
 # Compile kernel
-gcc -m32 -c kernel.c -o kernel.o -ffreestanding -O2 -Wall -Wextra
+gcc -m32 -c src/kernel/kernel.c -o build/kernel.o -ffreestanding -O2 -Wall -Wextra
 
 # Link
-ld -m elf_i386 -T linker.ld -o THBOS.bin boot.o kernel.o
+ld -m elf_i386 -T src/linker/linker.ld -o build/THBOS.bin build/boot.o build/kernel.o
 
 # Create ISO
 mkdir -p build/isodir/boot/grub
-cp THBOS.bin build/isodir/boot/
-cp grub.cfg build/isodir/boot/grub/
+cp build/THBOS.bin build/isodir/boot/
+cp src/bootloader/grub.cfg build/isodir/boot/grub/
 grub-mkrescue -o THBOS.iso build/isodir
 ```
 
 ## Running
 
 ### QEMU
+
 ```bash
 qemu-system-x86_64 -cdrom THBOS.iso -m 512M -display sdl
 ```
 
 ### VirtualBox
+
 1. Create new VM (Type: Other, Version: Other/Unknown)
 2. Disable EFI
 3. Mount THBOS.iso as CD
 4. Boot
 
 ### Real Hardware
+
 Write ISO to USB:
+
 ```bash
 sudo dd if=THBOS.iso of=/dev/sdX bs=4M status=progress
 ```
@@ -132,10 +142,12 @@ sudo dd if=THBOS.iso of=/dev/sdX bs=4M status=progress
 ## CPUID Information Displayed
 
 ### Leaf 0x00 (Basic Info)
+
 - CPU vendor string (GenuineIntel, AuthenticAMD, etc.)
 - Maximum supported CPUID leaf
 
 ### Leaf 0x01 (Features)
+
 - **EAX**: Stepping, Model, Family IDs
 - **EBX**: Brand index, Cache line size, APIC ID
 - **ECX**: SSE3, SSSE3, SSE4.1/4.2, AES, AVX, etc.
@@ -144,6 +156,7 @@ sudo dd if=THBOS.iso of=/dev/sdX bs=4M status=progress
 ## Debugging
 
 ### With GDB
+
 ```bash
 # Terminal 1
 qemu-system-x86_64 -cdrom THBOS.iso -m 512M -s -S
@@ -156,6 +169,7 @@ gdb THBOS.bin
 ```
 
 ### QEMU Monitor
+
 ```bash
 qemu-system-x86_64 -cdrom THBOS.iso -monitor stdio
 ```
@@ -180,7 +194,6 @@ qemu-system-x86_64 -cdrom THBOS.iso -monitor stdio
 6. Shell interface
 7. Extended CPUID leaves (cache info, thermal, etc.)
 8. PCI device enumeration
-
 
 ## References
 
