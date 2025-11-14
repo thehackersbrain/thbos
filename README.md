@@ -171,10 +171,10 @@ sudo dd if=THBOS.iso of=/dev/sdX bs=4M status=progress
 
 ```bash
 # Terminal 1
-qemu-system-x86_64 -cdrom THBOS.iso -m 512M -s -S
+qemu-system-i386 -cdrom build/THBOS.iso -m 512M -s -S
 
 # Terminal 2
-gdb THBOS.bin
+gdb build/THBOS.bin
 (gdb) target remote localhost:1234
 (gdb) break kernel_entry
 (gdb) continue
