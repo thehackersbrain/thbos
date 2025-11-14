@@ -7,7 +7,7 @@ ZIG 	 := zig
 BOOT_DIR   := src/bootloader
 KERNEL_DIR := src/kernel
 LINKER_DIR := src/linker
-ZIG_DIR    := src/zigimpl
+ZIG_DIR    := src/zigtest
 
 BUILD_DIR  := build
 ISO_DIR    := $(BUILD_DIR)/isodir
