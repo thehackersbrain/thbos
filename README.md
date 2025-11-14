@@ -38,6 +38,7 @@ A minimal x86 operating system that displays CPU information using the CPUID ins
 9. Fixed binary printing for zero values
 10. Increased stack from 4KB to 16KB
 11. Added zig in the mix for additional or expermental things
+12. Added `-fno-omit-frame-pointer` flag for better debugging
 
 ## Requirements
 

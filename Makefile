@@ -17,7 +17,7 @@ BINARY     := $(BUILD_DIR)/THBOS.bin
 ISO        := $(BUILD_DIR)/THBOS.iso
 
 ASFLAGS  := --32
-CFLAGS   := -m32 -ffreestanding -O0 -Wall -Wextra -fno-stack-protector -nostdlib
+CFLAGS   := -m32 -ffreestanding -O0 -Wall -Wextra -fno-stack-protector -fno-omit-frame-pointer -nostdlib
 LDFLAGS  := -m elf_i386 -T $(LINKER_DIR)/linker.ld
 ZIGFLAGS := build-obj -target x86-freestanding -O ReleaseFast
 
@@ -55,9 +55,7 @@ run: $(ISO)
 	qemu-system-x86_64 -cdrom $(ISO) -m 512M -display sdl
 
 debug: $(ISO)
-	qemu-system-x86_64 -cdrom $(ISO) -m 512M -s -S &
-	sleep 1
-	gdb $(BINARY) -ex "target remote localhost:1234"
+	qemu-system-i386 -cdrom $(ISO) -m 512M -s -S
 
 # === Clean ===
 clean:
