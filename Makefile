@@ -2,20 +2,24 @@
 AS       := as
 CC       := gcc
 LD       := ld
-ASFLAGS  := --32
-CFLAGS   := -m32 -ffreestanding -O0 -Wall -Wextra -fno-stack-protector -nostdlib
-LDFLAGS  := -m elf_i386 -T src/linker/linker.ld
+ZIG 	 := zig
 
 BOOT_DIR   := src/bootloader
 KERNEL_DIR := src/kernel
 LINKER_DIR := src/linker
+ZIG_DIR    := src/zigimpl
 
 BUILD_DIR  := build
 ISO_DIR    := $(BUILD_DIR)/isodir
 OBJ_DIR    := $(BUILD_DIR)/obj
-OBJECTS := $(OBJ_DIR)/boot.o $(OBJ_DIR)/kernel.o
-BINARY  := $(BUILD_DIR)/THBOS.bin
-ISO     := $(BUILD_DIR)/THBOS.iso
+OBJECTS    := $(OBJ_DIR)/boot.o $(OBJ_DIR)/kernel.o $(OBJ_DIR)/hello.o
+BINARY     := $(BUILD_DIR)/THBOS.bin
+ISO        := $(BUILD_DIR)/THBOS.iso
+
+ASFLAGS  := --32
+CFLAGS   := -m32 -ffreestanding -O0 -Wall -Wextra -fno-stack-protector -nostdlib
+LDFLAGS  := -m elf_i386 -T $(LINKER_DIR)/linker.ld
+ZIGFLAGS := build-obj -target x86-freestanding -O ReleaseFast
 
 .PHONY: all clean run debug dirs
 
@@ -32,6 +36,9 @@ $(OBJ_DIR)/boot.o: $(BOOT_DIR)/boot.s | dirs
 
 $(OBJ_DIR)/kernel.o: $(KERNEL_DIR)/kernel.c $(KERNEL_DIR)/kernel.h | dirs
 	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR)/hello.o: $(ZIG_DIR)/hello.zig | dirs
+	$(ZIG) $(ZIGFLAGS) $< -femit-bin=$@
 
 # === Linking ===
 $(BINARY): $(OBJECTS) $(LINKER_DIR)/linker.ld | dirs

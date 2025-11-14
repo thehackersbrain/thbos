@@ -10,11 +10,12 @@ typedef unsigned int uint32;
 #define VGA_HEIGHT 25
 #define BUFSIZE (VGA_WIDTH * VGA_HEIGHT)
 
-uint16* vga_buffer;
+uint16 *vga_buffer;
 
 #define NULL 0
 
-enum vga_color {
+enum vga_color
+{
   BLACK,
   BLUE,
   GREEN,
@@ -45,5 +46,8 @@ void cpuid(uint32 value, uint32 *eax, uint32 *ebx, uint32 *ecx, uint32 *edx);
 int cpuid_available();
 void cpuid_test();
 void kernel_entry();
+void zig_hello(void);
+int zig_add(int a, int b);
+void c_print_string(const char *str);
 
 #endif

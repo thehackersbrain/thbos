@@ -21,7 +21,8 @@ int digit_ascii_codes[10] = {0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x3
 //  8 bits : ASCII character to print
 //
 
-uint16 vga_entry(unsigned char ch, uint8 fore_color, uint8 back_color) {
+uint16 vga_entry(unsigned char ch, uint8 fore_color, uint8 back_color)
+{
   uint16 ax = 0;
   uint8 ah = 0, al = 0;
 
@@ -37,9 +38,11 @@ uint16 vga_entry(unsigned char ch, uint8 fore_color, uint8 back_color) {
 }
 
 // clear video buffer array
-void clear_vga_buffer(uint16 **buffer, uint8 fore_color, uint8 back_color) {
+void clear_vga_buffer(uint16 **buffer, uint8 fore_color, uint8 back_color)
+{
   uint32 i;
-  for (i = 0; i < BUFSIZE; i++) {
+  for (i = 0; i < BUFSIZE; i++)
+  {
     (*buffer)[i] = vga_entry(NULL, fore_color, back_color);
   }
   next_line_index = 1;
@@ -47,82 +50,106 @@ void clear_vga_buffer(uint16 **buffer, uint8 fore_color, uint8 back_color) {
 }
 
 // Initialize vga buffer
-void init_vga(uint8 fore_color, uint8 back_color) {
-  vga_buffer = (uint16*)VGA_ADDRESS;
+void init_vga(uint8 fore_color, uint8 back_color)
+{
+  vga_buffer = (uint16 *)VGA_ADDRESS;
   clear_vga_buffer(&vga_buffer, fore_color, back_color);
   g_fore_color = fore_color;
   g_back_color = back_color;
 }
 
 // Scroll screen up by one line
-void scroll_up() {
+void scroll_up()
+{
   uint32 i;
   // Move all lines up
-  for (i = 0; i < BUFSIZE - VGA_WIDTH; i++) {
+  for (i = 0; i < BUFSIZE - VGA_WIDTH; i++)
+  {
     vga_buffer[i] = vga_buffer[i + VGA_WIDTH];
   }
   // Clear last line
-  for (i = BUFSIZE - VGA_WIDTH; i < BUFSIZE; i++) {
+  for (i = BUFSIZE - VGA_WIDTH; i < BUFSIZE; i++)
+  {
     vga_buffer[i] = vga_entry(NULL, g_fore_color, g_back_color);
   }
 }
 
 // Increase vga_index by width of row(80)
-void print_new_line() {
-  if (next_line_index >= VGA_HEIGHT) {
+void print_new_line()
+{
+  if (next_line_index >= VGA_HEIGHT)
+  {
     scroll_up();
     vga_index = VGA_WIDTH * (VGA_HEIGHT - 1);
-  } else {
+  }
+  else
+  {
     vga_index = VGA_WIDTH * next_line_index;
     next_line_index++;
   }
 }
 
-//assign ascii character to video buffer
-void print_char(char ch) {
-  if (ch == '\n') {
+// assign ascii character to video buffer
+void print_char(char ch)
+{
+  if (ch == '\n')
+  {
     print_new_line();
-  } else if (ch == '\t') {
+  }
+  else if (ch == '\t')
+  {
     // 2 spaces for horizontal tab(9)
     vga_buffer[vga_index] = vga_entry(9, g_back_color, g_back_color);
     vga_index++;
     vga_buffer[vga_index] = vga_entry(9, g_back_color, g_back_color);
     vga_index++;
-  } else {
+  }
+  else
+  {
     vga_buffer[vga_index] = vga_entry(ch, g_fore_color, g_back_color);
     vga_index++;
   }
 }
 
-uint32 strlen(const char* str) {
+uint32 strlen(const char *str)
+{
   uint32 length = 0;
-  while (str[length]) {
+  while (str[length])
+  {
     length++;
   }
   return length;
 }
 
-uint32 digit_count(int num) {
+uint32 digit_count(int num)
+{
   uint32 count = 0;
-  if (num == 0) {
+  if (num == 0)
+  {
     return 1;
   }
-  while(num > 0) {
+  while (num > 0)
+  {
     count++;
-    num = num/10;
+    num = num / 10;
   }
   return count;
 }
 
-void itoa(int num, char *number) {
+void itoa(int num, char *number)
+{
   int dgcount = digit_count(num);
   int index = dgcount - 1;
   char x;
-  if (num == 0 && dgcount == 1) {
+  if (num == 0 && dgcount == 1)
+  {
     number[0] = '0';
     number[1] = '\0';
-  } else {
-    while (num != 0) {
+  }
+  else
+  {
+    while (num != 0)
+    {
       x = num % 10;
       number[index] = x + '0';
       index--;
@@ -133,9 +160,11 @@ void itoa(int num, char *number) {
 }
 
 // print string by calling print_char
-void print_string(char *str) {
+void print_string(char *str)
+{
   uint32 index = 0;
-  while(str[index]) {
+  while (str[index])
+  {
     print_char(str[index]);
     index++;
   }
@@ -143,54 +172,69 @@ void print_string(char *str) {
 
 // print int by converting it into string
 // & then printing string
-void print_int(int num) {
+void print_int(int num)
+{
   char str_num[digit_count(num) + 1];
   itoa(num, str_num);
   print_string(str_num);
 }
 
-void print_binary(uint32 num) {
+void print_binary(uint32 num)
+{
   uint32 i;
-  
+
   // Handle zero case
-  if (num == 0) {
-    for (i = 0; i < 32; i++) {
+  if (num == 0)
+  {
+    for (i = 0; i < 32; i++)
+    {
       print_char('0');
     }
     return;
   }
-  
+
   char bin_arr[32];
   uint32 index = 31;
-  
-  while (num > 0) {
-    if (num & 1) {
+
+  while (num > 0)
+  {
+    if (num & 1)
+    {
       bin_arr[index] = '1';
-    } else {
+    }
+    else
+    {
       bin_arr[index] = '0';
     }
     index--;
     num >>= 1;
   }
 
-  for (i = 0; i < 32; ++i) {
-    if (i <= index) {
+  for (i = 0; i < 32; ++i)
+  {
+    if (i <= index)
+    {
       print_char('0');
-    } else {
+    }
+    else
+    {
       print_char(bin_arr[i]);
     }
   }
 }
 
-void print_hex(uint32 num) {
+void print_hex(uint32 num)
+{
   char hex_chars[] = "0123456789ABCDEF";
   print_string("0x");
-  
+
   int i;
   int started = 0;
-  for (i = 28; i >= 0; i -= 4) {
+  for (i = 28; i >= 0; i -= 4)
+  {
     uint8 digit = (num >> i) & 0xF;
-    if (digit != 0 || started || i == 0) {
+    if (digit != 0 || started || i == 0)
+    {
       print_char(hex_chars[digit]);
       started = 1;
     }
@@ -198,60 +242,62 @@ void print_hex(uint32 num) {
 }
 
 // Check if CPUID is available
-int cpuid_available() {
+int cpuid_available()
+{
   uint32 flag;
   asm volatile(
-    "pushfl\n"
-    "pushfl\n"
-    "xorl $0x00200000, (%%esp)\n"
-    "popfl\n"
-    "pushfl\n"
-    "popl %0\n"
-    "popfl\n"
-    : "=r"(flag)
-  );
-  
+      "pushfl\n"
+      "pushfl\n"
+      "xorl $0x00200000, (%%esp)\n"
+      "popfl\n"
+      "pushfl\n"
+      "popl %0\n"
+      "popfl\n"
+      : "=r"(flag));
+
   uint32 original;
   asm volatile("pushfl\n popl %0" : "=r"(original));
-  
+
   return ((flag ^ original) & 0x00200000) != 0;
 }
 
-void cpuid(uint32 value, uint32 *eax, uint32 *ebx, uint32 *ecx, uint32 *edx) {
+void cpuid(uint32 value, uint32 *eax, uint32 *ebx, uint32 *ecx, uint32 *edx)
+{
   asm volatile(
-    "cpuid"
-    : "=a"(*eax), "=b"(*ebx), "=c"(*ecx), "=d"(*edx)
-    : "a"(value)
-  );
+      "cpuid"
+      : "=a"(*eax), "=b"(*ebx), "=c"(*ecx), "=d"(*edx)
+      : "a"(value));
 }
 
-void print_vendor_string() {
+void print_vendor_string()
+{
   uint32 eax, ebx, ecx, edx;
   char vendor[13];
-  
+
   cpuid(0x00, &eax, &ebx, &ecx, &edx);
-  
+
   // EBX, EDX, ECX contain vendor string
-  *((uint32*)vendor) = ebx;
-  *((uint32*)(vendor + 4)) = edx;
-  *((uint32*)(vendor + 8)) = ecx;
+  *((uint32 *)vendor) = ebx;
+  *((uint32 *)(vendor + 4)) = edx;
+  *((uint32 *)(vendor + 8)) = ecx;
   vendor[12] = '\0';
-  
+
   print_string("\n\nCPU Vendor: ");
   print_string(vendor);
   print_string("\nMax CPUID Value: ");
   print_int(eax);
 }
 
-void print_eax(uint32 eax) {
+void print_eax(uint32 eax)
+{
   uint32 step_id, model, family_id, proc_type, ext_mod_id, ext_fam_id;
-  
-  step_id = eax & 0xF;  // bits 0-3
-  model = (eax >> 4) & 0xF;  // bits 4-7
-  family_id = (eax >> 8) & 0xF;  // bits 8-11
-  proc_type = (eax >> 12) & 0x3;  // bits 12-13
+
+  step_id = eax & 0xF;             // bits 0-3
+  model = (eax >> 4) & 0xF;        // bits 4-7
+  family_id = (eax >> 8) & 0xF;    // bits 8-11
+  proc_type = (eax >> 12) & 0x3;   // bits 12-13
   ext_mod_id = (eax >> 16) & 0xF;  // bits 16-19
-  ext_fam_id = (eax >> 20) & 0xFF;  // bits 20-27
+  ext_fam_id = (eax >> 20) & 0xFF; // bits 20-27
 
   print_string("\n\nEAX (Version Information):");
   print_string("\n  Stepping ID: ");
@@ -268,14 +314,15 @@ void print_eax(uint32 eax) {
   print_int(ext_fam_id);
 }
 
-void print_ebx(uint32 ebx) {
+void print_ebx(uint32 ebx)
+{
   uint32 brand_index, cache_line_size, max_addr_id, init_apic_id;
-  
-  brand_index = ebx & 0xFF;  // bits 0-7
-  cache_line_size = (ebx >> 8) & 0xFF;  // bits 8-15
-  max_addr_id = (ebx >> 16) & 0xFF;  // bits 16-23
-  init_apic_id = (ebx >> 24) & 0xFF;  // bits 24-31
-  
+
+  brand_index = ebx & 0xFF;            // bits 0-7
+  cache_line_size = (ebx >> 8) & 0xFF; // bits 8-15
+  max_addr_id = (ebx >> 16) & 0xFF;    // bits 16-23
+  init_apic_id = (ebx >> 24) & 0xFF;   // bits 24-31
+
   print_string("\n\nEBX (Additional Information):");
   print_string("\n  Brand Index: ");
   print_int(brand_index);
@@ -288,7 +335,8 @@ void print_ebx(uint32 ebx) {
   print_int(init_apic_id);
 }
 
-void print_ecx(uint32 ecx) {
+void print_ecx(uint32 ecx)
+{
   print_string("\n\nECX (Feature Flags):");
   print_string("\n  ");
   print_binary(ecx);
@@ -303,7 +351,8 @@ void print_ecx(uint32 ecx) {
   print_string("\n  Bit 28: AVX");
 }
 
-void print_edx(uint32 edx) {
+void print_edx(uint32 edx)
+{
   print_string("\n\nEDX (Feature Flags):");
   print_string("\n  ");
   print_binary(edx);
@@ -325,7 +374,8 @@ void print_edx(uint32 edx) {
   print_string("\n\nBy - Gaurav Raj (@thehackersbrain) - https://thehackersbrain.xyz");
 }
 
-void cpuid_test() {
+void cpuid_test()
+{
   uint32 eax, ebx, ecx, edx;
 
   print_string("========================================");
@@ -333,7 +383,8 @@ void cpuid_test() {
   print_string("\n========================================");
 
   // Check if CPUID is available
-  if (!cpuid_available()) {
+  if (!cpuid_available())
+  {
     print_string("\n\nCPUID instruction not available!");
     return;
   }
@@ -348,12 +399,24 @@ void cpuid_test() {
   print_ebx(ebx);
   print_ecx(ecx);
   print_edx(edx);
-  
+
   print_string("\n\n=================================================================");
 }
 
-void kernel_entry() {
+void c_print_string(const char *str)
+{
+  print_string((char *)str);
+}
+
+void kernel_entry()
+{
   // first init vga with fore & back color
   init_vga(WHITE, BLUE);
   cpuid_test();
+
+  // zig test
+  zig_hello();
+  print_string("\n\nZig computation: 42 + 58 = ");
+  int sum = zig_add(42, 58);
+  print_int(sum);
 }
