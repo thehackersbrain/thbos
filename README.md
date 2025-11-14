@@ -78,8 +78,11 @@ as --32 src/bootloader/boot.s -o build/boot.o
 # Compile kernel
 gcc -m32 -c src/kernel/kernel.c -o build/kernel.o -ffreestanding -O2 -Wall -Wextra
 
+# compiling zig objects
+zig build-obj -target x86-freestanding -O ReleaseFast build/zigtest/hello.zig -femit-bin=build/hello.o
+
 # Link
-ld -m elf_i386 -T src/linker/linker.ld -o build/THBOS.bin build/boot.o build/kernel.o
+ld -m elf_i386 -T src/linker/linker.ld -o build/THBOS.bin build/boot.o build/kernel.o build/hello.o
 
 # Create ISO
 mkdir -p build/isodir/boot/grub
