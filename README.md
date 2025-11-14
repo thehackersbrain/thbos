@@ -39,6 +39,7 @@ A minimal x86 operating system that displays CPU information using the CPUID ins
 10. Increased stack from 4KB to 16KB
 11. Added zig in the mix for additional or expermental things
 12. Added `-fno-omit-frame-pointer` flag for better debugging
+13. Added `.gdbinit` file for quicker and easier debugging with gdb
 
 ## Requirements
 
@@ -180,6 +181,52 @@ gdb build/THBOS.bin
 (gdb) break kernel_entry
 (gdb) continue
 ```
+
+### 🚀 GDB Debugging Shortcuts
+
+THBoS provides a set of custom GDB shortcut commands (auto-loaded from `.gdbinit`) to make kernel debugging faster and more intuitive.
+These commands are designed for low-level OS development and work seamlessly with QEMU’s `-s -S` debug stub.
+
+#### 🔧 Loading the Debug Environment
+
+Start QEMU:
+
+```sh
+qemu-system-i386 -kernel build/THBOS.bin -m 512M -s -S
+```
+
+Start GDB:
+
+```sh
+gdb build/THBOS.bin
+```
+
+The custom `.gdbinit` in this project is auto-loaded and provides the commands documented below.
+
+| Command       | Description                                                      |
+| ------------- | ---------------------------------------------------------------- |
+| `regs`        | Displays all CPU registers.                                      |
+| `here`        | Shows execution context: EIP, ESP, EBP, and nearby instructions. |
+| `code`        | Disassembles instructions around the current EIP.                |
+| `stack`       | Dumps raw stack memory starting from `$esp`.                     |
+| `frame`       | Prints the EBP frame: locals, args, and return address.          |
+| `snap`        | Full system snapshot (registers + stack + instructions).         |
+| `pg <addr>`   | Dumps a full 4KB page from the given address.                    |
+| `dump <addr>` | Hexdump of 128 bytes at the address.                             |
+| `s1`          | Step 1 CPU instruction.                                          |
+| `s10`         | Step 10 CPU instructions.                                        |
+| `s100`        | Step 100 CPU instructions.                                       |
+| `runk`        | Breaks at `panic()` and continues execution.                     |
+
+---
+
+## 📝 Notes
+
+- Add this: `set auto-load safe-path /` into your `~/.config/gdb/gdbinit` file
+- These shortcuts only work when GDB loads the project’s `.gdbinit`.
+- The kernel must be run with `qemu-system-i386` to avoid architecture mismatches.
+
+---
 
 ### QEMU Monitor
 
