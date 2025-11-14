@@ -37,6 +37,7 @@ A minimal x86 operating system that displays CPU information using the CPUID ins
 8. Added hexadecimal printing function
 9. Fixed binary printing for zero values
 10. Increased stack from 4KB to 16KB
+11. Added zig in the mix for additional or expermental things
 
 ## Requirements
 
@@ -45,17 +46,18 @@ A minimal x86 operating system that displays CPU information using the CPUID ins
 - GRUB utilities (grub-mkrescue)
 - QEMU (for testing)
 - xorriso (dependency for grub-mkrescue)
+- zig (for experimental things)
 
 ### Ubuntu/Debian
 
 ```bash
-sudo apt install build-essential gcc-multilib grub-pc-bin xorriso qemu-system-x86 qemu-ui
+sudo apt install build-essential gcc-multilib grub-pc-bin xorriso qemu-system-x86 qemu-ui zig
 ```
 
 ### Arch Linux
 
 ```bash
-sudo pacman -S base-devel grub xorriso qemu-arch-extra qemu-ui-sdl
+sudo pacman -S base-devel grub xorriso qemu-arch-extra qemu-ui-sdl zig
 ```
 
 ## Building
