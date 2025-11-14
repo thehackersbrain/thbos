@@ -133,8 +133,6 @@ sudo dd if=THBOS.iso of=/dev/sdX bs=4M status=progress
     │   └── linker.ld     # Linker script
     └── zigtest
         └── hello.zig     # zig files (in testing)
-
-6 directories, 8 files
 ```
 
 ## Memory Layout
